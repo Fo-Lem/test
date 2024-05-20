@@ -4,7 +4,12 @@
       <h1>Rick and Morty</h1>
     </header>
     <div class="content">
-      <FilterBar @confirm-filters="getCharacters()" v-model:filters="filters"></FilterBar>
+      <FilterBar :filters="filters" @confirm-filters="(filters)=>{
+        filters.name = filters.name.trim()
+        filters.status = filters.status
+        curentPage = 1
+        getCharacters()
+      }"></FilterBar>
       <div class="content__container">
         <div v-if="characters.length" class="content-characters">
           <CharacterCard v-for="character in characters" :key="character.id" :name="character.name" :species="character.species" :status="character.status"

@@ -7,23 +7,26 @@
             <option value="Dead">Мертвые</option>
             <option value="unknown">Неизвестно</option>
             </select>
-        <input @click="emits('confirmFilters')" type="button" value="Принять">
+        <input @click="emits('confirmFilters', props.filters)" type="button" value="Принять">
     </div>
 </template>
 
 <script setup lang="ts">
 
-const filters = defineModel<{
-    name: string,
-    status: string
-}>("filters", {
-    type: Object,
-    required: true
-})
+import { PropType } from 'vue';
 
-const emits = defineEmits(
-    ['confirmFilters']
+const props = defineProps(
+    {
+        filters: {
+            type: Object as PropType<{ name: string, status: string }>,
+            required: true
+        }
+    }
 )
+
+const emits = defineEmits<{
+    (e: "confirmFilters", filters: { name: string, status: string }): void
+}>()
 
 </script>
 
